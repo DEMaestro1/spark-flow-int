@@ -10,16 +10,16 @@
   <a href="#airflow-interface">Airflow Interface</a> •
   <a href="#spark-interface">Airflow Interface</a> •
   <a href="#pipeline-task-by-task">Pipeline Task by Task</a> •
-  <a href="#shut-down-and-restart-airflow">Shut Down and Restart Airflow</a> 
+  <a href="#shut-down-and-restart-airflow">Shut Down and Restart Airflow and Spark</a> 
 </p>
 
 ## About
 
 This is a small project showcasing how to build an ETL workload using Airflow, Spark and PostgreSQL with Docker being used for deployment.
 
-A file is pulled from local storage(easily replaceable with an AWS S3 bucket if need be or a curl command), transformed using Spark and loaded into a PostgreSQL database. 
+A file is read from local storage(easily replaceable with an AWS S3 bucket if need be or a curl/wget command), transformed using Spark and loaded into a PostgreSQL database. 
 
-The project is built in Python/PySpark and it has 2 main parts:
+The project is built in Python and Spark and it has 3 main parts:
   1. The Airflow DAG file, [**dagRun.py**](https://github.com/DEMaestro1/AirflowOrchSpark/blob/main/dags/dagRun.py), which orchestrates the data pipeline tasks.
   2. The data transformation/processing script which uses Spark is located in [**transformationProcess.py**](https://github.com/DEMaestro1/AirflowOrchSpark/blob/main/spark/tasks/transformationProcess.py)
   3. The script that loads the data to PostgreSQL can be found in [**loadProcess.py**](https://github.com/DEMaestro1/AirflowOrchSpark/blob/main/spark/tasks/loadProcess.py)
@@ -45,7 +45,7 @@ We are only looking for countries with a specific poverty level in the year of 2
 
 ## Set-up
 
-Download / pull the repo to your desired location.
+Download or pull the repo to your desired location.
 
 You can change the user and passwords in docker-compose file if need be, just make sure to change the configuration.conf file that is being used. Usually instead of user and pass being stored in such a way, projects use AWS Secrets or Azure Key Vault.
 
@@ -53,7 +53,7 @@ You can change the user and passwords in docker-compose file if need be, just ma
 
 Start the installation with:
 
-	docker build -t airflow-custom .
+    docker build -t airflow-custom .
     docker-compose up -d
 
 This command will pull and create Docker images and containers for Airflow as well as another PostgreSQL container to store poverty data.
@@ -101,9 +101,9 @@ However if need be, the data can be stored on the same container but it is gener
 
 ## Shut Down and Restart Airflow
 
-For any changes made in the configuration files to be applied, you will have to rebuild the Airflow images with the command:
+For any changes made in the configuration files to be applied, you will need to rebuild the Airflow images with the commands:
 	
-	docker build -t airflow-custom .
+    docker build -t airflow-custom .
     docker-compose build
 
 Recreate all the containers with:

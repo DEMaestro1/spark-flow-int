@@ -1,6 +1,6 @@
 import configparser
 from pyspark.sql import SparkSession
-import sys
+from sys import argv
 
 #Grabbing arguments passed by airflow
 fileLocation = sys.argv[1]
@@ -16,9 +16,10 @@ spark = SparkSession \
     .appName('Spark-test') \
     .getOrCreate()
     
-
+#Reading the parquet file written during the transformation_job task
 df = spark.read.parquet(stagedFileLocation)
 
+#Creating a table in PostgreSQL and loading the parquet data into it
 df.write.format("jdbc")\
   .option("url", postgresURL)\
   .option("dbtable", "poverty")\

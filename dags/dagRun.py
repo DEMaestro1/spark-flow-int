@@ -52,7 +52,8 @@ with DAG('proc_data',
         conn_id = 'spark_default',
         application_args = [filePath]
         )     
-        
+     
+    #Passing the postgres jar as well as the configurations for postgres   
     load_job = SparkSubmitOperator(
         task_id = 'load_job',
         application = f'{taskPath}/loadProcess.py', 

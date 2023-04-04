@@ -1,6 +1,6 @@
 import configparser
 from pyspark.sql import SparkSession
-from sys import argv
+import sys
 
 #Grabbing arguments passed by airflow
 fileLocation = sys.argv[1]

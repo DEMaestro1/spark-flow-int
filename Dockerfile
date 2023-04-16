@@ -16,4 +16,5 @@ USER airflow
 
 #COPY ./requirements.txt /
 #RUN pip install -r /requirements.txt
-RUN pip install apache-airflow-providers-apache-spark
+RUN pip install pyspark==3.3.2 && \
+    pip install apache-airflow-providers-apache-spark==4.0.0

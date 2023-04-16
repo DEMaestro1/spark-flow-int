@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col
-from sys import argv
+import sys
 
 #Creating raw file path from passed system argument
 fileLocation = sys.argv[1]
@@ -13,7 +13,7 @@ spark = SparkSession \
     
 sc = spark.sparkContext
  
- #Reading the csv and removing the first 4 lines from the file since it contains information regarding the data source.
+#Reading the csv and removing the first 4 lines from the file since it contains information regarding the data source.
 rdd = sc.textFile(povertyData)\
             .zipWithIndex()\
             .filter(lambda x:x[1]>=4)\
